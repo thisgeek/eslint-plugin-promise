@@ -11,14 +11,15 @@ ruleTester.run('no-return-in-finally', rule, {
     { code: 'myPromise.finally(() => {});', parserOptions: { ecmaVersion: 6 } },
     { code: 'Promise.resolve(1).finally(function () { })' },
     { code: 'Promise.resolve().finally(() => otherPromise())', parserOptions: { ecmaVersion: 6 } },
-    { code: 'Promise.resolve().finally(() => { return startOtherPromise(); })', parserOptions: { ecmaVersion: 6 } },
-    { code: 'Promise.resolve().finally(() => { return otherPromise; })', parserOptions: { ecmaVersion: 6 } }
+    { code: 'Promise.resolve().finally(() => { return startOtherPromise() })', parserOptions: { ecmaVersion: 6 } },
+    { code: 'Promise.resolve().finally(() => { return otherPromise })', parserOptions: { ecmaVersion: 6 } },
+    { code: 'Promise.resolve().finally(() => otherPromise)', parserOptions: { ecmaVersion: 6 } }
   ],
   invalid: [
     { code: 'Promise.resolve(1).finally(() => { return 2 })', parserOptions: { ecmaVersion: 6 }, errors: [ { message: message } ] },
     { code: 'Promise.reject(0).finally(() => { return 2 })', parserOptions: { ecmaVersion: 6 }, errors: [ { message: message } ] },
     { code: 'myPromise.finally(() => { return 2 });', parserOptions: { ecmaVersion: 6 }, errors: [ { message: message } ] },
     { code: 'Promise.resolve(1).finally(function () { return 2 })', errors: [ { message: message } ] },
-    { code: 'myPromise.finally(() => 2);', parserOptions: { ecmaVersion: 6 }, errors: [ { message: message } ] }
+    { code: 'myPromise.finally(() => 2)', parserOptions: { ecmaVersion: 6 }, errors: [ { message: message } ] }
   ]
 })
